@@ -11,12 +11,15 @@ import os
 import torch.nn.functional as F
 import cv2
 import scipy.io as sio
+import sys
 
 
 from tqdm import tqdm
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from create_datasets.urbancars.maskformer.mask_former.config import (
     add_mask_former_config,
 )
+sys.path.pop(0)
 from detectron2.data.detection_utils import read_image
 from detectron2.config import get_cfg
 from detectron2.engine.defaults import DefaultPredictor

@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python eval_multiple_shortcuts",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./eval_shortcuts/eval_multiple_shortcuts.py",
+            // "program": "/home/oh/arubinstein17/github/densification/scripts_for_runner/for_runner_eval_standard_imagenet_9.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            // "args": [
+            //     "--result_path",
+            //     // "/home/oh/arubinstein17/github/densification/data/results/for_runner_eval_clips_imagenet_d_113.pth"
+            //     "/home/oh/arubinstein17/github/densification/data/results/for_runner_eval_clips_imagenet_9.pth"
+            // ]
+
+        },
+        {
+            "name": "Python urbancars_trainers/launcher.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./urbancars_trainers/launcher.py",
+            // "program": "/home/oh/arubinstein17/github/densification/scripts_for_runner/for_runner_eval_standard_imagenet_9.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--method",
+                "lle",
+                "--amp",
+                "--num_worker",
+                "10",
+                "--epoch",
+                "300",
+                "--slurm_job_name",
+                "lle",
+                "--group_label",
+                "both",
+                "--early_stop_metric",
+                "both",
+                "--num_seed",
+                "6",
+                "--only_eval",
+                "--ckpt_fpath",
+                "/home/oh/arubinstein17/github/Whac-A-Mole/exp/urbancars/lle_es_both_urbancars/seed_0/best.pth"
+                // "--wandb"
+            ]
+        },
+        {
+            "name": "Python predict_car_mask",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./create_datasets/urbancars/predict_car_mask.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--split",
+                "train"
+            ]
+        },
+        {
+            "name": "Python gen_urbancars",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./create_datasets/urbancars/gen_urbancars.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--split",
+                "train"
+            ]
+        },
+    ]
+}

@@ -9,10 +9,13 @@ import argparse
 import submitit
 import copy
 import os
+import sys
 
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from urbancars_trainers import method_to_trainer
 from utils import slurm_wandb_argparser
+sys.path.pop(0)
 
 
 def parse_args():
@@ -61,6 +64,8 @@ def parse_args():
     parser.add_argument("--weight_decay", type=float, default=1e-4)
     parser.add_argument("--momentum", default=0.9, type=float, help="momentum")
     parser.add_argument("--optimizer", type=str, default="sgd")
+    parser.add_argument("--ckpt_fpath", type=str)
+    parser.add_argument("--only_eval", action="store_true")
 
     parser.add_argument(
         "--exp_root", type=str, default="exp/urbancars"
@@ -181,8 +186,21 @@ def main():
         output_list = [job.result() for job in job_list]
     else:
         for job_args in args_list:
-            trainer = Trainer(job_args)
-            trainer()
+
+            new_args = copy.deepcopy(job_args)
+            ckpt_fpath = args.ckpt_fpath
+            if ckpt_fpath is not None and os.path.exists(ckpt_fpath):
+                new_args.resume = ckpt_fpath
+            else:
+                raise Exception("Checkpoint path does not exist")
+
+            trainer = Trainer(new_args)
+            if args.only_eval:
+                assert ckpt_fpath is not None
+                trainer._setup_all()
+                trainer.eval()
+            else:
+                trainer()
 
 
 if __name__ == "__main__":

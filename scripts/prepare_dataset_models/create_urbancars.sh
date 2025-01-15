@@ -11,13 +11,17 @@ mkdir data/stanford_cars/mask
 mkdir data/stanford_cars/mask/cars_train
 mkdir data/stanford_cars/mask/cars_test
 
-wget http://ai.stanford.edu/~jkrause/car196/cars_train.tgz -O data/stanford_cars/cars_train.tgz
-wget http://ai.stanford.edu/~jkrause/car196/cars_test.tgz -O data/stanford_cars/cars_test.tgz
-wget http://ai.stanford.edu/~jkrause/cars/car_devkit.tgz -O data/stanford_cars/car_devkit.tgz
-wget http://ai.stanford.edu/~jkrause/car196/cars_test_annos_withlabels.mat -O data/stanford_cars/cars_test_annos_withlabels.mat
-tar xvzf data/stanford_cars/cars_train.tgz -C data/stanford_cars
-tar xvzf data/stanford_cars/cars_test.tgz -C data/stanford_cars
-tar xvzf data/stanford_cars/car_devkit.tgz -C data/stanford_cars
+# stanford link is dead (27.12.2024), use kaggle instead
+# wget http://ai.stanford.edu/~jkrause/car196/cars_train.tgz -O data/stanford_cars/cars_train.tgz
+# wget http://ai.stanford.edu/~jkrause/car196/cars_test.tgz -O data/stanford_cars/cars_test.tgz
+# wget http://ai.stanford.edu/~jkrause/cars/car_devkit.tgz -O data/stanford_cars/car_devkit.tgz
+# wget http://ai.stanford.edu/~jkrause/car196/cars_test_annos_withlabels.mat -O data/stanford_cars/cars_test_annos_withlabels.mat
+# tar xvzf data/stanford_cars/cars_train.tgz -C data/stanford_cars
+# tar xvzf data/stanford_cars/cars_test.tgz -C data/stanford_cars
+# tar xvzf data/stanford_cars/car_devkit.tgz -C data/stanford_cars
+curl -L -o data/torchvision-stanford-cars.zip\
+  https://www.kaggle.com/api/v1/datasets/download/rickyyyyyyy/torchvision-stanford-cars
+unzip data/torchvision-stanford-cars.zip -d data/
 
 git clone git@github.com:facebookresearch/MaskFormer.git create_datasets/urbancars/maskformer
 mkdir exp
@@ -26,6 +30,7 @@ wget https://dl.fbaipublicfiles.com/maskformer/panoptic-coco/maskformer_panoptic
 
 PYTHONPATH=.:$PYTHONPATH python create_datasets/urbancars/predict_car_mask.py --split train
 PYTHONPATH=.:$PYTHONPATH python create_datasets/urbancars/predict_car_mask.py --split test
+
 
 
 # preparing LVIS dataset
@@ -48,7 +53,8 @@ unzip data/coco/val2017.zip -d data/coco
 # preparing Places dataset
 
 # Download places with small images (256 * 256)
-wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar -O data/places365standard_easyformat.tar
+mkdir data/places
+wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar -O data/places/places365standard_easyformat.tar
 
 tar xvf data/places/places365standard_easyformat.tar -C data
 mv data/places365_standard data/places

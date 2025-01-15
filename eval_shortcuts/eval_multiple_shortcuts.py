@@ -12,12 +12,16 @@ import wandb
 import torch
 import torchvision.transforms as transforms
 import copy
+import sys
 
 
 from tqdm import tqdm
-from utils import set_seed
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils import (
+    slurm_wandb_argparser,
+    set_seed
+)
 from imagenet_w.watermark_transform import AddWatermark, CARTON_CLASS_INDEX
-from torchvision.transforms._presets import ImageClassification
 from dataset.imagenet import ImageNet
 from dataset.imagenet_stylized import ImageNetStylized
 from dataset.imagenet_200 import ImageNet200
@@ -25,7 +29,8 @@ from dataset.imagenet_r import ImageNetR
 from dataset.imagenet9 import ImageNet9
 from dataset.imagenet_sketch import ImageNetSketch
 from model.model_zoo import get_model_and_transforms
-from utils import slurm_wandb_argparser
+sys.path.pop(0)
+from torchvision.transforms._presets import ImageClassification
 
 
 class MultiShortcutEvaluator:

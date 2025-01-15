@@ -100,6 +100,15 @@ class StanfordCars(VisionDataset):
         ) as f:
             urban_or_country_list = json.load(f)
 
+        # Remove filenames that don't have corresponding masks (e.g. masks had all 1s)
+        filtered_filename_set = {
+            fname for fname in filtered_filename_set
+            if os.path.exists(os.path.join(
+                self._mask_split_path,
+               os.path.splitext(fname)[0] + "_mask.png"
+            ))
+        }
+
         self._samples = [
             (
                 str(self._images_base_path / annotation["fname"]),

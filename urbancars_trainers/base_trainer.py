@@ -267,6 +267,9 @@ class BaseTrainer:
         val_log_dict = self._eval_split(self.val_loader, "val")
         test_log_dict = self._eval_split(self.test_loader, "test")
 
+        print("val_log_dict", val_log_dict)
+        print("test_log_dict", test_log_dict)
+
         early_stop_metric_result = val_log_dict[
             self.args.early_stop_metric_real
         ]

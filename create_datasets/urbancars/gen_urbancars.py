@@ -13,19 +13,21 @@ import copy
 import random
 import numpy as np
 import torch
+import sys
 
-
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from create_datasets.urbancars.src_dataset.lvis import LVISDataset
 from create_datasets.urbancars.src_dataset.places import Places
 from data_utils.object_scale import (
     crop_mask_and_img,
     rescale_cropped_mask_and_img,
 )
+from torch.utils.data import Subset, ConcatDataset
+sys.path.pop(0)
 from torchvision.transforms import ToTensor
 from torchvision.utils import save_image
-from tqdm import tqdm
-from torch.utils.data import Subset, ConcatDataset
 from create_datasets.urbancars.src_dataset.stanford_cars import StanfordCars
+from tqdm import tqdm
 from logging import warning
 
 
