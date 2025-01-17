@@ -199,6 +199,7 @@ def main():
                 assert ckpt_fpath is not None
                 trainer._setup_all()
                 trainer.eval()
+                break # we don't need loop over all seeds
             else:
                 trainer()
 
